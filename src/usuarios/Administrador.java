@@ -5,6 +5,7 @@ import java.util.List;
 
 import almacen.Pieza;
 import subasta.Oferta;
+import subasta.Subasta;
 
 public class Administrador {
 	private static List<Oferta> ofertasPendientes = new LinkedList<Oferta>();
@@ -45,5 +46,19 @@ public class Administrador {
 		nuevoPropietario.agregarPieza(pieza);
 		Administrador.ofertasPendientes.remove(oferta);
 		Administrador.ofertasAceptadas.add(oferta);
+	}
+	
+	public static void agregarOferta(Oferta oferta) {
+		Administrador.ofertasPendientes.add(oferta);
+	}
+	
+	public void crearSubasta(List<Pieza> piezas, List<Comprador> compradores, Operador operador) {
+		List<Pieza> piezasValidas = piezas.stream().filter((a) -> a.isDisponibleVenta()).toList();
+		List<Comprador> compradoresValidos = compradores
+				.stream()
+				.filter((a) -> Comprador.isComprador(a))
+				.toList();
+		Subasta subasta = new Subasta(piezasValidas, compradoresValidos);
+		operador.asignarSubasta(subasta);
 	}
 }

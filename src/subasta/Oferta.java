@@ -32,4 +32,8 @@ public class Oferta {
 	public void setPieza(Pieza pieza) {
 		this.pieza = pieza;
 	}
+	
+	public int compareTo(Oferta b) {
+		return Long.signum((long)this.dinero - b.dinero);
+	}
 }
